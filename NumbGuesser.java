@@ -7,9 +7,11 @@ public class NumbGuesser {
 
 	static Scanner sc = new Scanner(System.in);
 	static Random rand = new Random();
-	public static int myNum, guessNum, i;
+	public static int tries, myNum, guessNum, i;
 
 	public static void main(String[] args) {
+		System.out.println("How many tries would you like? 1-7");
+		tries = sc.nextInt();
 		// establish the random number
 		myNum = rand.nextInt(100) + 1;
 		System.out.println("Guess my integer between 1 and 100, inclusive.");
@@ -29,10 +31,10 @@ public class NumbGuesser {
 			} else {
 				System.out.println("Something went wrong. Try again.");
 			}
-		} while (guessNum != myNum && i < 7);
+		} while (guessNum != myNum && i < tries);
 
 		if (guessNum != myNum) {
-			System.out.println("Sorry, but you weren't able to guess in 7 tries or less.");
+			System.out.println("Sorry, but you weren't able to guess in " + tries + " tries or less.");
 			System.out.println("My number was " + myNum + ".");
 		}
 	}
