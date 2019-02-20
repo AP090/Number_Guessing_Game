@@ -61,7 +61,7 @@ public class NumbGuesser {
 
 	public static void guessLoop(int tries, int myNum, int rangeLow, int rangeHigh) {
 		int guessNum = 0;
-		for (int i = 1; i < tries; i++) {
+		for (int i = 0; i < tries; i++) {
 			while (true) {
 				try {
 					guessNum = sc.nextInt();
