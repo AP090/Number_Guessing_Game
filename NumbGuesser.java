@@ -12,36 +12,24 @@ public class NumbGuesser {
 	public static void main(String[] args) throws Exception {
 		System.out.println(
 				"The default range is 1-100. If you would like to change it, enter Y/T. Otherwise, type something random.");
+
 		char customRange = sc.next().charAt(0);
+
 		rangeLow = 1;
 		rangeHigh = 100;
 		int tries;
+
 		switch (customRange) {
 		case 'T':
 		case 't':
 		case 'Y':
 		case 'y':
-			while (true) {
-				try {
-					getCustomRange();
-					break;
-				} catch (Exception fail) {
-					System.out.println("Something went wrong. Inputs have been reset and you must try again.");
-					sc.nextLine();
-				}
-			}
-			break;
+			getCustomRange();
 		}
+
 		System.out.println("How many tries would you like?");
-		while (true) {
-			try {
-				tries = sc.nextInt();
-				break;
-			} catch (Exception fail) {
-				System.out.println("Why do I spend my time doing this?");
-				sc.nextLine();
-			}
-		}
+		tries = getInt();
+
 		// establish the random number
 		int myNum = rand.nextInt(rangeHigh) + rangeLow;
 		System.out.println("Guess my integer between " + rangeLow + " and " + rangeHigh + ", inclusive.");
@@ -50,27 +38,18 @@ public class NumbGuesser {
 
 	public static void getCustomRange() throws Exception {
 		System.out.println("Choose the low end of your range.");
-		rangeLow = sc.nextInt();
-		System.out.println("Choose the high end of your range.");
-		rangeHigh = sc.nextInt();
+		rangeLow = getInt();
 
-		if (rangeLow >= rangeHigh) {
-			throw new Exception("Just whyyyyyyyy?");
-		}
+		System.out.println("Choose the high end of your range.");
+		rangeHigh = getInt();
 	}
 
 	public static void guessLoop(int tries, int myNum, int rangeLow, int rangeHigh) {
-		int guessNum = 0;
+		int guessNum;
+
 		for (int i = 0; i < tries; i++) {
-			while (true) {
-				try {
-					guessNum = sc.nextInt();
-					break;
-				} catch (Exception fail) {
-					System.out.println("Try again.");
-					sc.nextLine();
-				}
-			}
+			guessNum = getInt();
+
 			if (guessNum < rangeLow || guessNum > rangeHigh) {
 				System.out.println("You guessed out of bounds! Try again.");
 			} else if (guessNum > myNum) {
@@ -79,15 +58,24 @@ public class NumbGuesser {
 				System.out.println("Your number was too low. Try again.");
 			} else if (guessNum == myNum) {
 				System.out.println("You guessed correctly in " + i + " tries!");
-				break;
+				return;
 			} else {
 				System.out.println("Something went wrong. Try again.");
 			}
 		}
 
-		if (guessNum != myNum) {
-			System.out.println("Sorry, but you weren't able to guess in " + tries + " tries or less.");
-			System.out.println("My number was " + myNum + ".");
+		System.out.println("Sorry, but you weren't able to guess in " + tries + " tries or less.");
+		System.out.println("My number was " + myNum + ".");
+	}
+
+	private static int getInt() {
+		while (true) {
+			try {
+				return sc.nextInt();
+			} catch (Exception fail) {
+				System.out.println("Try again.");
+				sc.nextLine();
+			}
 		}
 	}
 }
